@@ -6,9 +6,14 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { List, ListItem } from 'material-ui/List'
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
 import IconButton from 'material-ui/IconButton'
+import { Checkbox } from 'material-ui'
 
-import { addTaskInputChangeAction, addNewTaskToDbAsyncAction, toggleToDoAsyncAction } from './state/toDo'
-import { Checkbox } from 'material-ui';
+import {
+    addTaskInputChangeAction,
+    addNewTaskToDbAsyncAction,
+    toggleToDoAsyncAction,
+    deleteTaskAsyncAction
+} from './state/toDo'
 
 const ToDo = props => (
     <Paper
@@ -64,7 +69,7 @@ const ToDo = props => (
                         <ListItem
                             primaryText={todo.text}
                             key={todo.key}
-                            style={ todo.completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}
+                            style={todo.completed ? { textDecoration: 'line-through' } : { textDecoration: 'none' }}
                             leftCheckbox={
                                 <Checkbox
                                     defaultChecked={todo.completed}
@@ -73,7 +78,7 @@ const ToDo = props => (
                             }
                             rightIconButton={
                                 <IconButton
-                                    onClick={() => alert('not yet')}
+                                    onClick={() => props._deleteTaskAsyncAction(todo.key)}
                                 >
                                     <DeleteIcon />
                                 </IconButton>
@@ -94,7 +99,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     _addTaskInputChangeAction: (event) => dispatch(addTaskInputChangeAction(event.target.value)),
     _addNewTaskToDbAsyncAction: () => dispatch(addNewTaskToDbAsyncAction()),
-    _toggleToDoAsyncAction: (task) => dispatch(toggleToDoAsyncAction(task))
+    _toggleToDoAsyncAction: (task) => dispatch(toggleToDoAsyncAction(task)),
+    _deleteTaskAsyncAction: (key) => dispatch(deleteTaskAsyncAction(key))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToDo)

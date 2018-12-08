@@ -2,6 +2,7 @@ import { database } from '../firebaseConfig'
 
 const ADD_TASK_INPUT_CHANGE = 'toDo/ADD_TASK_INPUT_CHANGE'
 const RENDER_TASK_LIST = 'toDo/RENDER_TASK_LIST'
+const CLEAN_ADD_TASK_INPUT = 'toDo/CLEAN_ADD_TASK_INPUT'
 
 const INITIAL_STATE = {
     allToDos: null,
@@ -18,6 +19,8 @@ export const addNewTaskToDbAsyncAction = () => (dispatch, getState) => {
         text: newTask,
         completed: false
     })
+
+    dispatch(cleanAddTaskInputAction())
 }
 
 export const toggleToDoAsyncAction = (task) => (dispatch, getState) => {
@@ -28,12 +31,19 @@ export const toggleToDoAsyncAction = (task) => (dispatch, getState) => {
     })
 }
 
+export const deleteTaskAsyncAction = (key) => (dispatch, getState) => {
+    const uuid = getState().auth.user.uid
+
+    database.ref(`users/${uuid}/tasks`).child(key).remove()
+}
+
 export const getTasksListFromDbAsyncAction = () => (dispatch, getState) => {
     const uuid = getState().auth.user.uid
 
     database.ref(`users/${uuid}/tasks`).on(
         'value',
         snapshot => {
+            if (snapshot.val()) {
             const tasks = Object.entries(
                 snapshot.val()
             ).map(entry => ({
@@ -42,6 +52,9 @@ export const getTasksListFromDbAsyncAction = () => (dispatch, getState) => {
 
             }))
             dispatch(renderTaskListAction(tasks))
+         } else {
+            dispatch(renderTaskListAction(null))
+         }
         }
     )
 }
@@ -49,6 +62,10 @@ export const getTasksListFromDbAsyncAction = () => (dispatch, getState) => {
 const renderTaskListAction = tasks => ({
     type: RENDER_TASK_LIST,
     tasks
+})
+
+const cleanAddTaskInputAction = () => ({
+    type: CLEAN_ADD_TASK_INPUT
 })
 
 export const addTaskInputChangeAction = text => ({
@@ -67,6 +84,11 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 allToDos: action.tasks
+            }
+            case CLEAN_ADD_TASK_INPUT:
+            return {
+                ...state,
+                newTaskText: ''
             }
         default:
             return state
