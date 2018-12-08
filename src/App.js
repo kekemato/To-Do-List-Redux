@@ -1,13 +1,12 @@
 import React from 'react'
+import ToDo from './ToDo'
 
 class App extends React.Component {
   render() {
     return (
-      <div>
-
-      </div>
+      <ToDo />
     )
   }
 }
 
-export default App;
+export default App
