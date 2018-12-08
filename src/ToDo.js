@@ -8,6 +8,7 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete'
 import IconButton from 'material-ui/IconButton'
 import { Checkbox } from 'material-ui'
 
+import './css/ToDo.css'
 import {
     addTaskInputChangeAction,
     addNewTaskToDbAsyncAction,
@@ -21,10 +22,7 @@ import {
 
 const ToDo = props => (
     <Paper
-        style={{
-            margin: 15,
-            padding: 10
-        }}
+        className='to-do-list-container'
     >
         <TextField
             hintText='Add task'

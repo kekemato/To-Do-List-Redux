@@ -1,0 +1,7 @@
+.log-out-button {
+    position: fixed;
+    bottom: 5vh;
+    right: 7vw;
+    z-index: 999;
+    color: white;
+}

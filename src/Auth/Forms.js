@@ -3,66 +3,54 @@ import Paper from 'material-ui/Paper'
 import RaisedButton from 'material-ui/RaisedButton'
 import { TextField } from 'material-ui'
 
+import '../css/Forms.css'
+
 const Forms = props => (
     <Paper
+        className="forms-container"
         style={{
             margin: 15,
             padding: 10
         }}
     >
         <div
-            style={{
-                border: '1px solid #a6a6a6',
-                width: '30%',
-                marginLeft: '35%'
-            }}
+            className="login-inputs-container"
         >
             <TextField
+                className="login-input__email login-input"
                 value={props.email}
+                fullWidth={true}
                 type="email"
                 onChange={props.loginChangeAction}
                 hintText="email"
-                style={{
-                    width: "80%",
-                    margin: "10px 10%"
-                }}
             >
             </TextField>
             <br />
             <TextField
+                className="login-input__password login-input"
+                fullWidth={true}
                 value={props.password}
                 type="password"
                 onChange={props.passwordChangeAction}
-                hintText="hasło"
-                style={{
-                    width: "80%",
-                    margin: "10px 10%"
-                }}
+                hintText="password"
             >
             </TextField>
         </div>
 
         <br />
         <RaisedButton
+            className="login-button"
             onClick={props.handleLogInClick}
             primary={true}
-            label="Zaloguj"
-            style={{
-                width: '20%',
-                marginBottom: 50,
-                marginLeft: '40%'
-            }}
+            label="Log in"
         >
         </RaisedButton>
+        <br />
         <RaisedButton
+            className="login-button"
             onClick={props.handleLogInWithGoogleClick}
             secondary={true}
-            label="Zaloguj z google"
-            style={{
-                width: '20%',
-                marginBottom: 10,
-                marginLeft: '40%'
-            }}
+            label="Log in with google"
         >
         </RaisedButton>
     </Paper>

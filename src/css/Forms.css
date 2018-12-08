@@ -1,0 +1,31 @@
+.forms-container {
+    margin: 15px;
+    padding: 10px;
+}
+
+.login-inputs-container {
+    border: 1px solid #a6a6a6;
+    width: 40%;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.login-input {
+    margin: 10px auto;
+}
+
+.login-button {
+    width: 40%;
+    margin: 20px 30%;
+}
+
+@media only screen and (max-width: 767px) {
+    .login-inputs-container {
+        width: 90%;
+    }
+
+    .login-button {
+        width: 90%;
+        margin: 20px 5%;
+    }
+}

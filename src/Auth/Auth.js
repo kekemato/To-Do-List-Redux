@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import Forms from './Forms'
 
 import { initAuthChangeListeningAsyncAction, logOutAsyncAction, logInWithGoogleAsyncAction, logInAsyncAction, loginChangeAction, passwordChangeAction } from '../state/auth'
+import '../css/Auth.css'
 
 class Auth extends React.Component {
     componentDidMount() {
@@ -16,15 +17,8 @@ class Auth extends React.Component {
             this.props._isUserLoggedIn ?
                 <div>
                     <FloatingActionButton
+                        className='log-out-button'
                         secondary={true}
-                        style={{
-                            position: "fixed",
-                            top: 20,
-                            right: 70,
-                            zIndex: 999,
-                            color: "white"
-                        }
-                        }
                         onClick={this.props._logOutAsyncAction}
                     >
                         Log Out
