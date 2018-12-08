@@ -3,10 +3,11 @@ import { database } from '../firebaseConfig'
 const ADD_TASK_INPUT_CHANGE = 'toDo/ADD_TASK_INPUT_CHANGE'
 const RENDER_TASK_LIST = 'toDo/RENDER_TASK_LIST'
 const CLEAN_ADD_TASK_INPUT = 'toDo/CLEAN_ADD_TASK_INPUT'
+const FILTER_INPUT_CHANGE = 'toDo/FILTER_INPUT_CHANGE'
 
 const INITIAL_STATE = {
     allToDos: null,
-    visibleToDos: [],
+    visibleToDos: null,
     filterToDo: '',
     newTaskText: ''
 }
@@ -68,6 +69,11 @@ const cleanAddTaskInputAction = () => ({
     type: CLEAN_ADD_TASK_INPUT
 })
 
+export const filterInputChangeAction = text => ({
+    type: FILTER_INPUT_CHANGE,
+    text
+})
+
 export const addTaskInputChangeAction = text => ({
     type: ADD_TASK_INPUT_CHANGE,
     text
@@ -83,12 +89,21 @@ export default (state = INITIAL_STATE, action) => {
             case RENDER_TASK_LIST:
             return {
                 ...state,
-                allToDos: action.tasks
+                allToDos: action.tasks,
+                visibleToDos: action.tasks
             }
             case CLEAN_ADD_TASK_INPUT:
             return {
                 ...state,
                 newTaskText: ''
+            }
+            case FILTER_INPUT_CHANGE:
+            return {
+                ...state,
+                filter: action.text,
+                visibleToDos: state.allToDos.filter(todo => todo.text.toLowerCase().replace(/\s/g, '')
+                .includes(action.text.toLowerCase().replace(/\s/g, ''))
+                )
             }
         default:
             return state

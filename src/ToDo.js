@@ -12,7 +12,8 @@ import {
     addTaskInputChangeAction,
     addNewTaskToDbAsyncAction,
     toggleToDoAsyncAction,
-    deleteTaskAsyncAction
+    deleteTaskAsyncAction,
+    filterInputChangeAction
 } from './state/toDo'
 
 const ToDo = props => (
@@ -38,34 +39,35 @@ const ToDo = props => (
         <br />
         <TextField
             hintText='Find task'
+            onChange={props._filterInputChangeAction}
         />
         <br />
         <RaisedButton
             label='All tasks'
-            primary={true}
+            secondary={true}
             style={{
                 marginLeft: 10
             }}
         />
         <RaisedButton
             label='Uncompleted tasks'
-            primary={true}
+            secondary={true}
             style={{
                 marginLeft: 10
             }}
         />
         <RaisedButton
             label='Completed tasks'
-            primary={true}
+            secondary={true}
             style={{
                 marginLeft: 10
             }}
         />
         <List>
             {
-                props._allToDos &&
-                    props._allToDos.map ?
-                    props._allToDos.map(todo =>
+                props._visibleToDos &&
+                    props._visibleToDos.map ?
+                    props._visibleToDos.map(todo =>
                         <ListItem
                             primaryText={todo.text}
                             key={todo.key}
@@ -93,10 +95,13 @@ const ToDo = props => (
 
 const mapStateToProps = state => ({
     _newTaskText: state.toDo.newTaskText,
-    _allToDos: state.toDo.allToDos
+    _allToDos: state.toDo.allToDos,
+    _filter: state.toDo.filter,
+    _visibleToDos: state.toDo.visibleToDos
 })
 
 const mapDispatchToProps = dispatch => ({
+    _filterInputChangeAction: event => dispatch(filterInputChangeAction(event.target.value)),
     _addTaskInputChangeAction: (event) => dispatch(addTaskInputChangeAction(event.target.value)),
     _addNewTaskToDbAsyncAction: () => dispatch(addNewTaskToDbAsyncAction()),
     _toggleToDoAsyncAction: (task) => dispatch(toggleToDoAsyncAction(task)),
