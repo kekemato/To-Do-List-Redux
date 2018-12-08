@@ -13,7 +13,10 @@ import {
     addNewTaskToDbAsyncAction,
     toggleToDoAsyncAction,
     deleteTaskAsyncAction,
-    filterInputChangeAction
+    filterInputChangeAction,
+    showCompletedTasksAction,
+    showUncompletedTasksAction,
+    showAllTasksAction
 } from './state/toDo'
 
 const ToDo = props => (
@@ -48,6 +51,7 @@ const ToDo = props => (
             style={{
                 marginLeft: 10
             }}
+            onClick={props._showAllTasksAction}
         />
         <RaisedButton
             label='Uncompleted tasks'
@@ -55,6 +59,7 @@ const ToDo = props => (
             style={{
                 marginLeft: 10
             }}
+            onClick={props._showUncompletedTasksAction}
         />
         <RaisedButton
             label='Completed tasks'
@@ -62,6 +67,7 @@ const ToDo = props => (
             style={{
                 marginLeft: 10
             }}
+            onClick={props._showCompletedTasksAction}
         />
         <List>
             {
@@ -105,7 +111,10 @@ const mapDispatchToProps = dispatch => ({
     _addTaskInputChangeAction: (event) => dispatch(addTaskInputChangeAction(event.target.value)),
     _addNewTaskToDbAsyncAction: () => dispatch(addNewTaskToDbAsyncAction()),
     _toggleToDoAsyncAction: (task) => dispatch(toggleToDoAsyncAction(task)),
-    _deleteTaskAsyncAction: (key) => dispatch(deleteTaskAsyncAction(key))
+    _deleteTaskAsyncAction: (key) => dispatch(deleteTaskAsyncAction(key)),
+    _showCompletedTasksAction: () => dispatch(showCompletedTasksAction()),
+    _showUncompletedTasksAction: () => dispatch(showUncompletedTasksAction()),
+    _showAllTasksAction: () => dispatch(showAllTasksAction())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToDo)
