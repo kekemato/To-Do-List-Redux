@@ -1,4 +1,7 @@
 import { database } from '../firebaseConfig'
+import { filterArray } from '../utils'
+
+const dbRef = uuid => (`users/${uuid}/tasks/`)
 
 const ADD_TASK_INPUT_CHANGE = 'toDo/ADD_TASK_INPUT_CHANGE'
 const RENDER_TASK_LIST = 'toDo/RENDER_TASK_LIST'
@@ -16,10 +19,10 @@ const INITIAL_STATE = {
 }
 
 export const addNewTaskToDbAsyncAction = () => (dispatch, getState) => {
-    const newTask = getState().toDo.newTaskText
     const uuid = getState().auth.user.uid
+    const newTask = getState().toDo.newTaskText
 
-    database.ref(`users/${uuid}/tasks`).push({
+    database.ref(dbRef(uuid)).push({
         text: newTask,
         completed: false
     })
@@ -30,7 +33,7 @@ export const addNewTaskToDbAsyncAction = () => (dispatch, getState) => {
 export const toggleToDoAsyncAction = (task) => (dispatch, getState) => {
     const uuid = getState().auth.user.uid
 
-    database.ref(`users/${uuid}/tasks/${task.key}`).update({
+    database.ref(dbRef(uuid) + `${task.key}`).update({
         completed: !task.completed
     })
 }
@@ -38,13 +41,13 @@ export const toggleToDoAsyncAction = (task) => (dispatch, getState) => {
 export const deleteTaskAsyncAction = (key) => (dispatch, getState) => {
     const uuid = getState().auth.user.uid
 
-    database.ref(`users/${uuid}/tasks`).child(key).remove()
+    database.ref(dbRef(uuid)).child(key).remove()
 }
 
 export const getTasksListFromDbAsyncAction = () => (dispatch, getState) => {
     const uuid = getState().auth.user.uid
 
-    database.ref(`users/${uuid}/tasks`).on(
+    database.ref(dbRef(uuid)).on(
         'value',
         snapshot => {
             if (snapshot.val()) {
@@ -105,7 +108,7 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 allToDos: action.tasks,
-                visibleToDos: action.tasks
+                visibleToDos: filterArray(action.tasks, state.filterToDo)
             }
         case CLEAN_ADD_TASK_INPUT:
             return {
@@ -115,28 +118,27 @@ export default (state = INITIAL_STATE, action) => {
         case FILTER_INPUT_CHANGE:
             return {
                 ...state,
-                filter: action.text,
-                visibleToDos: state.allToDos.filter(todo => todo.text.toLowerCase().replace(/\s/g, '')
-                    .includes(action.text.toLowerCase().replace(/\s/g, ''))
-                )
+                filterToDo: action.text,
+                visibleToDos: filterArray(state.allToDos, action.text)
             }
         case SHOW_ALL_TASKS:
             return {
                 ...state,
-                visibleToDos: state.allToDos.filter(todo => todo.text.toLowerCase().replace(/\s/g, '')
-                .includes(state.filter.toLowerCase().replace(/\s/g, '')))
+                visibleToDos: filterArray(state.allToDos, state.filterToDo)
             }
         case SHOW_COMPLETED_TASKS:
             return {
                 ...state,
-                visibleToDos: state.allToDos.filter(todo => todo.completed === true).filter(todo => todo.text.toLowerCase().replace(/\s/g, '')
-                .includes(state.filter.toLowerCase().replace(/\s/g, '')))
+                visibleToDos: filterArray(state.allToDos
+                    .filter(todo => todo.completed === true),
+                    state.filterToDo)
             }
         case SHOW_UNCOMPLETED_TASKS:
             return {
                 ...state,
-                visibleToDos: state.allToDos.filter(todo => todo.completed === false).filter(todo => todo.text.toLowerCase().replace(/\s/g, '')
-                .includes(state.filter.toLowerCase().replace(/\s/g, '')))
+                visibleToDos: filterArray(state.allToDos
+                    .filter(todo => todo.completed === false),
+                    state.filterToDo)
             }
         default:
             return state

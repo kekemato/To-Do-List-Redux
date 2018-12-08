@@ -80,7 +80,7 @@ const ToDo = props => (
                             style={todo.completed ? { textDecoration: 'line-through' } : { textDecoration: 'none' }}
                             leftCheckbox={
                                 <Checkbox
-                                    defaultChecked={todo.completed}
+                                    checked={todo.completed}
                                     onCheck={() => props._toggleToDoAsyncAction(todo)}
                                 />
                             }
