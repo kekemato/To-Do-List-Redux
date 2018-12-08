@@ -1,4 +1,37 @@
 .to-do-list-container {
-    margin: 15;
-    padding: 10;
+    margin: 15px;
+    padding: 10px;
+}
+
+.inputs-container {
+    width: 40%;
+}
+
+.input {
+    margin: 10px auto;
+}
+
+.add-task-button {
+    margin-bottom: 10px;
+}
+
+.filter-buttons-container {
+    display: flex;
+}
+
+.filter-button {
+    margin: 15px;
+}
+
+@media only screen and (max-width: 767px) {
+    .inputs-container {
+        width: 100%;
+    }
+    .filter-button {
+        margin: 5px;
+    }
+    .filter-buttons-container {
+        flex-direction: column;
+        padding: 10px
+    }
 }

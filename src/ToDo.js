@@ -24,49 +24,52 @@ const ToDo = props => (
     <Paper
         className='to-do-list-container'
     >
-        <TextField
-            hintText='Add task'
-            value={props._newTaskText}
-            onChange={props._addTaskInputChangeAction}
-        />
-        <RaisedButton
-            label='Add task'
-            primary={true}
-            style={{
-                marginLeft: 10
-            }}
-            onClick={props._addNewTaskToDbAsyncAction}
-        />
-        <br />
-        <TextField
-            hintText='Find task'
-            onChange={props._filterInputChangeAction}
-        />
-        <br />
-        <RaisedButton
-            label='All tasks'
-            secondary={true}
-            style={{
-                marginLeft: 10
-            }}
-            onClick={props._showAllTasksAction}
-        />
-        <RaisedButton
-            label='Uncompleted tasks'
-            secondary={true}
-            style={{
-                marginLeft: 10
-            }}
-            onClick={props._showUncompletedTasksAction}
-        />
-        <RaisedButton
-            label='Completed tasks'
-            secondary={true}
-            style={{
-                marginLeft: 10
-            }}
-            onClick={props._showCompletedTasksAction}
-        />
+        <div
+            className='inputs-container'
+        >
+            <TextField
+                className='add-task-input input'
+                hintText='Add task'
+                value={props._newTaskText}
+                onChange={props._addTaskInputChangeAction}
+                fullWidth={true}
+            />
+            <RaisedButton
+                className='add-task-button'
+                label='Add task'
+                primary={true}
+                onClick={props._addNewTaskToDbAsyncAction}
+                fullWidth={true}
+            />
+            <TextField
+                className='filter-tasks-input input'
+                hintText='Find task'
+                onChange={props._filterInputChangeAction}
+                fullWidth={true}
+            />
+        </div>
+        <div
+            className='filter-buttons-container'
+        >
+            <RaisedButton
+                className='filter-button'
+                label='All tasks'
+                secondary={true}
+                onClick={props._showAllTasksAction}
+            />
+            <RaisedButton
+                className='filter-button'
+                label='Uncompleted tasks'
+                secondary={true}
+                onClick={props._showUncompletedTasksAction}
+            />
+            <RaisedButton
+                className='filter-button'
+                label='Completed tasks'
+                secondary={true}
+                onClick={props._showCompletedTasksAction}
+            />
+        </div>
         <List>
             {
                 props._visibleToDos &&
