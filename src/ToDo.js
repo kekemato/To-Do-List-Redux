@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { List, ListItem } from 'material-ui/List'
 
 import { addTaskInputChangeAction, addNewTaskToDbAsyncAction } from './state/toDo'
+import { MenuItem } from 'material-ui';
 
 const ToDo = props => (
     <Paper
@@ -54,13 +55,23 @@ const ToDo = props => (
             }}
         />
         <List>
-
+            {
+                props._allToDos &&
+                props._allToDos.map ?
+                props._allToDos.map(todo =>
+                    <MenuItem
+                        primaryText={todo.task}
+                    />
+                )
+                : null
+            }
         </List>
     </Paper>
 )
 
 const mapStateToProps = state => ({
-    _newTaskText: state.toDo.newTaskText
+    _newTaskText: state.toDo.newTaskText,
+    _allToDos: state.toDo.allToDos
 })
 
 const mapDispatchToProps = dispatch => ({

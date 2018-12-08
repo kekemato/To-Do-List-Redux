@@ -1,4 +1,5 @@
 import { auth, googleProvider} from '../firebaseConfig'
+import { getTasksListFromDbAsyncAction } from './toDo';
 
 const LOG_IN = 'auth/LOG_IN'
 const LOG_OUT = 'auth/LOG_OUT'
@@ -17,6 +18,7 @@ export const initAuthChangeListeningAsyncAction = () => (dispatch, getState) => 
         user => {
             if (user) {
                 dispatch(logInAction(user))
+                dispatch(getTasksListFromDbAsyncAction())
             } else {
                 dispatch(logOutAction())
             }
