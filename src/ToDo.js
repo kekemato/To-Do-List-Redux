@@ -5,6 +5,8 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import { List, ListItem } from 'material-ui/List'
 
+import { addTaskInputChangeAction, addNewTaskToDbAsyncAction } from './state/toDo'
+
 const ToDo = props => (
     <Paper
         style={{
@@ -14,6 +16,8 @@ const ToDo = props => (
     >
         <TextField
             hintText='Add task'
+            value={props._newTaskText}
+            onChange={props._addTaskInputChangeAction}
         />
         <RaisedButton
             label='Add task'
@@ -21,6 +25,7 @@ const ToDo = props => (
             style={{
                 marginLeft: 10
             }}
+            onClick={props._addNewTaskToDbAsyncAction}
         />
         <br />
         <TextField
@@ -55,11 +60,12 @@ const ToDo = props => (
 )
 
 const mapStateToProps = state => ({
-
+    _newTaskText: state.toDo.newTaskText
 })
 
 const mapDispatchToProps = dispatch => ({
-
+    _addTaskInputChangeAction: (event) => dispatch(addTaskInputChangeAction(event.target.value)),
+    _addNewTaskToDbAsyncAction: () => dispatch(addNewTaskToDbAsyncAction())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToDo)

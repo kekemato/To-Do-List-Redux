@@ -1,4 +1,4 @@
-import { auth, googleProvider, database } from '../firebaseConfig'
+import { auth, googleProvider} from '../firebaseConfig'
 
 const LOG_IN = 'auth/LOG_IN'
 const LOG_OUT = 'auth/LOG_OUT'
