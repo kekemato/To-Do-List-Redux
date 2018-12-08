@@ -13,13 +13,13 @@ const Forms = props => (
             padding: 10
         }}
     >
-    <div
-        className='example-login'
-    >
-        <p>Example login and password:</p>
-        <p>email: example@example.com</p>
-        <p>password: example</p>
-    </div>
+        <div
+            className='example-login'
+        >
+            <p>Example login and password:</p>
+            <p>email: example@example.com</p>
+            <p>password: example</p>
+        </div>
         <div
             className="login-inputs-container"
         >

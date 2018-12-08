@@ -1,4 +1,4 @@
-import { auth, googleProvider} from '../firebaseConfig'
+import { auth, googleProvider } from '../firebaseConfig'
 import { getTasksListFromDbAsyncAction } from './toDo';
 
 const LOG_IN = 'auth/LOG_IN'
