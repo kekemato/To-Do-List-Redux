@@ -15,7 +15,16 @@ export const addNewTaskToDbAsyncAction = () => (dispatch, getState) => {
     const uuid = getState().auth.user.uid
 
     database.ref(`users/${uuid}/tasks`).push({
-        task: newTask
+        text: newTask,
+        completed: false
+    })
+}
+
+export const toggleToDoAsyncAction = (task) => (dispatch, getState) => {
+    const uuid = getState().auth.user.uid
+
+    database.ref(`users/${uuid}/tasks/${task.key}`).update({
+        completed: !task.completed
     })
 }
 
